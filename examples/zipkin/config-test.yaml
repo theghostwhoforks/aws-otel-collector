@@ -1,0 +1,24 @@
+extensions:
+  health_check:
+
+receivers:
+  zipkin:
+    endpoint: 0.0.0.0:9411
+
+processors:
+  batch/traces:
+    timeout: 1s
+    send_batch_size: 50
+
+exporters:
+  logging:
+    loglevel: debug
+
+service:
+  pipelines:
+    traces:
+      receivers: [zipkin]
+      processors: [batch/traces]
+      exporters: [logging]
+
+  extensions: [health_check]

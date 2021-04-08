@@ -1,0 +1,26 @@
+extensions:
+  health_check:
+
+receivers:
+  jaeger:
+    protocols:
+      thrift_http:
+        endpoint: 0.0.0.0:14268
+
+processors:
+  batch/traces:
+    timeout: 1s
+    send_batch_size: 50
+
+exporters:
+  logging:
+    loglevel: debug
+
+service:
+  pipelines:
+    traces:
+      receivers: [jaeger]
+      processors: [batch/traces]
+      exporters: [logging]
+
+  extensions: [health_check]

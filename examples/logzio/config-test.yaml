@@ -1,0 +1,37 @@
+extensions:
+  health_check:
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:55681
+
+processors:
+  batch/traces:
+    timeout: 1s
+    send_batch_size: 50
+  batch/metrics:
+    timeout: 60s
+
+exporters:
+  logging:
+    loglevel: debug
+  logzio:
+    account_token: testToken
+  awsemf:
+    region: 'us-west-2'
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch/traces]
+      exporters: [logging,logzio]
+    metrics:
+      receivers: [ otlp ]
+      exporters: [ awsemf ]
+
+  extensions: [health_check]
