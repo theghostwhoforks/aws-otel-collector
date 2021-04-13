@@ -20,8 +20,8 @@ exporters:
   logging:
     loglevel: debug
   logzio:
-    account_token: "tKwxxcdsDNTwPgYlYmFGbUMWeYJkcGxB"
-    custom_endpoint: "https://http-bulk-listener.logz.io/?token=tKwxxcdsDNTwPgYlYmFGbUMWeYJkcGxB"
+    account_token: "testToken"
+    custom_endpoint: "https://http-bulk-listener.logz.io/?token=testToken"
   awsemf:
     region: 'us-west-2'
 
