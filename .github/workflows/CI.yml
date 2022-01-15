@@ -826,6 +826,7 @@ jobs:
               fi
             fi
 
+
       #This is here just in case workflow cancel
       - name: Destroy resources
         if: ${{ cancelled() && steps.e2etest-ec2-3.outputs.cache-hit != 'true' }}
