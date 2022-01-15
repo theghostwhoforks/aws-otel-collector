@@ -966,12 +966,13 @@ jobs:
           cd testing-framework/terraform/eks && terraform init && terraform apply -auto-approve -lock=false $opts -var="aoc_version=${{ needs.e2etest-preparation.outputs.version }}" -var="testcase=../testcases/${{ matrix.testcase }}"
 
       - name: Destroy resources
+        id: destroy_resource
         if: ${{ always() && steps.e2etest-eks.outputs.cache-hit != 'true' }}
         run: |
           cd testing-framework/terraform/eks && terraform destroy -auto-approve
 
       - name: Upload test case's terraform state when destroy failed
-        if: ${{ steps.e2etest-eks.outputs.cache-hit != 'true'  && steps.destroy_resource.outcome != 'success'  }}
+        if: ${{ steps.e2etest-eks.outputs.cache-hit != 'true'  && steps.destroy_resource.outputs.status == 'failure'  }}
         run: |
           cd testing-framework/terraform/eks
           testing_id="$(terraform output testing_id)"
@@ -1126,7 +1127,7 @@ jobs:
           cd testing-framework/terraform/eks && terraform destroy -auto-approve -var-file="../testcases/${{ matrix.testcase }}/parameters.tfvars"
 
       - name: Upload test case's terraform state when destroy failed
-        if: ${{ steps.e2etest-eks-adot-operator.outputs.cache-hit != 'true'  && steps.destroy_resource.outcome != 'success'  }}
+        if: ${{ steps.e2etest-eks-adot-operator.outputs.cache-hit != 'true'  && steps.destroy_resource.outputs.status == 'failure'  }}
         run: |
           cd testing-framework/terraform/eks
           testing_id="$(terraform output testing_id)"
