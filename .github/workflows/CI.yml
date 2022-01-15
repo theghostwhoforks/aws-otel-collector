@@ -1042,9 +1042,11 @@ jobs:
             cd testing-framework/terraform/eks
             terraform init
             if terraform apply -auto-approve -lock=false $opts -var="aoc_version=${{ needs.e2etest-preparation.outputs.version }}" -var="testcase=../testcases/${{ matrix.testcase }}" ; then
+              testing_id="$(terraform output testing_id)"
+              cd ../add_on/remote_state && terraform init && terraform apply -auto-approve -var="platform=eks" -var="testing_id=$testing_id" -var="testcase=../../testcases/${{ matrix.testcase }}"
+
               if terraform destroy -auto-approve -var-file="../testcases/${{ matrix.testcase }}/parameters.tfvars"; then
-                testing_id="$(terraform output testing_id)"
-                cd ../add_on/remote_state && terraform init && terraform apply -auto-approve -var="platform=eks" -var="testing_id=$testing_id" -var="testcase=../../testcases/${{ matrix.testcase }}"
+                echo "test"
               fi
             else
               if ! terraform destroy -auto-approve -var-file="../testcases/${{ matrix.testcase }}/parameters.tfvars"; then
