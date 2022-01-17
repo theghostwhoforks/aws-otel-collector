@@ -28,6 +28,7 @@ require (
 	github.com/open-telemetry/opentelemetry-collector-contrib/processor/resourcedetectionprocessor v0.42.0
 	github.com/open-telemetry/opentelemetry-collector-contrib/processor/resourceprocessor v0.42.0
 	github.com/open-telemetry/opentelemetry-collector-contrib/processor/spanprocessor v0.42.0
+	github.com/open-telemetry/opentelemetry-collector-contrib/processor/seedingmetricsprocessor v0.42.0
 	github.com/open-telemetry/opentelemetry-collector-contrib/receiver/awscontainerinsightreceiver v0.42.0
 	github.com/open-telemetry/opentelemetry-collector-contrib/receiver/awsecscontainermetricsreceiver v0.42.0
 	github.com/open-telemetry/opentelemetry-collector-contrib/receiver/awsxrayreceiver v0.42.0
@@ -286,6 +287,9 @@ require (
 	sigs.k8s.io/structured-merge-diff/v4 v4.1.2 // indirect
 	sigs.k8s.io/yaml v1.2.0 // indirect
 )
+
+
+replace github.com/open-telemetry/opentelemetry-collector-contrib/processor/seedingmetricsprocessor => ../opentelemetry-collector-contrib/processor/seedingmetricsprocessor
 
 // https://github.com/open-telemetry/opentelemetry-collector-contrib/issues/4433
 exclude github.com/StackExchange/wmi v1.2.0

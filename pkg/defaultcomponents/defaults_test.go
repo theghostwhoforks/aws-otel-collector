@@ -25,7 +25,7 @@ const (
 	exportersCount  = 13
 	receiversCount  = 8
 	extensionsCount = 6
-	processorCount  = 12
+	processorCount  = 13
 )
 
 func TestComponents(t *testing.T) {
@@ -93,4 +93,5 @@ func TestComponents(t *testing.T) {
 	require.NotNil(t, processors["resourcedetection"])
 	require.NotNil(t, processors["cumulativetodelta"])
 	require.NotNil(t, processors["deltatorate"])
+	require.NotNil(t, processors["seedingmetrics"])
 }
